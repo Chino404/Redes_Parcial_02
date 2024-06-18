@@ -1,118 +1,117 @@
-using System;
-using Fusion;
-using UnityEngine;
+    using System;
+    using Fusion;
+    using UnityEngine;
+    
 
-[RequireComponent(typeof(CharacterController))]
-[OrderBefore(typeof(NetworkTransform))]
-[DisallowMultipleComponent]
-// ReSharper disable once CheckNamespace
-public class NetworkCharacterControllerPrototype : NetworkTransform {
-  [Header("Character Controller Settings")]
-  public float gravity       = -20.0f;
-  public float jumpImpulse   = 8.0f;
-  public float acceleration  = 10.0f;
-  public float braking       = 10.0f;
-  public float maxSpeed      = 2.0f;
-  public float rotationSpeed = 15.0f;
+    [RequireComponent(typeof(CharacterController))]
+    [OrderBefore(typeof(NetworkTransform))]
+    [DisallowMultipleComponent]
+    // ReSharper disable once CheckNamespace
+    public class NetworkCharacterControllerPrototype : NetworkTransform 
+    {
+      [Header("Character Controller Settings")]
+      public float gravity       = -20.0f;
+      public float jumpImpulse   = 8.0f;
+      public float acceleration  = 10.0f;
+      public float braking       = 10.0f;
+      public float maxSpeed      = 10.0f;
+      public float rotationSpeed = 15.0f;
 
-  [Networked]
-  [HideInInspector]
-  public bool IsGrounded { get; set; }
+        [SerializeField] protected float _dashingPower = 24f;
+        [SerializeField] protected float _dashingCooldown = 0.5f;
+        protected float _dashingTime = 0.2f;
+        protected bool _canDash = true, _isDashing = false;
 
-  [Networked]
-  [HideInInspector]
-  public Vector3 Velocity { get; set; }
+    [Networked]
+      [HideInInspector]
+      public bool IsGrounded { get; set; }
 
-  /// <summary>
-  /// Sets the default teleport interpolation velocity to be the CC's current velocity.
-  /// For more details on how this field is used, see <see cref="NetworkTransform.TeleportToPosition"/>.
-  /// </summary>
-  protected override Vector3 DefaultTeleportInterpolationVelocity => Velocity;
+      [Networked]
+      [HideInInspector]
+      public Vector3 Velocity { get; set; }
 
-  /// <summary>
-  /// Sets the default teleport interpolation angular velocity to be the CC's rotation speed on the Z axis.
-  /// For more details on how this field is used, see <see cref="NetworkTransform.TeleportToRotation"/>.
-  /// </summary>
-  protected override Vector3 DefaultTeleportInterpolationAngularVelocity => new Vector3(0f, 0f, rotationSpeed);
+ 
+      protected override Vector3 DefaultTeleportInterpolationVelocity => Velocity;
 
-  public CharacterController Controller { get; private set; }
+      protected override Vector3 DefaultTeleportInterpolationAngularVelocity => new Vector3(0f, 0f, rotationSpeed);
 
-  protected override void Awake() {
-    base.Awake();
-    CacheController();
-  }
+      public CharacterController Controller { get; private set; }
 
-  public override void Spawned() {
-    base.Spawned();
-    CacheController();
-  }
+      protected override void Awake() {
+        base.Awake();
+        CacheController();
+      }
 
-  private void CacheController() {
-    if (Controller == null) {
-      Controller = GetComponent<CharacterController>();
+      public override void Spawned() {
+        base.Spawned();
+        CacheController();
+      }
 
-      Assert.Check(Controller != null, $"An object with {nameof(NetworkCharacterControllerPrototype)} must also have a {nameof(CharacterController)} component.");
-    }
-  }
+      private void CacheController() {
+        if (Controller == null) {
+          Controller = GetComponent<CharacterController>();
 
-  protected override void CopyFromBufferToEngine() {
-    // Trick: CC must be disabled before resetting the transform state
-    Controller.enabled = false;
+          Assert.Check(Controller != null, $"An object with {nameof(NetworkCharacterControllerPrototype)} must also have a {nameof(CharacterController)} component.");
+        }
+      }
 
-    // Pull base (NetworkTransform) state from networked data buffer
-    base.CopyFromBufferToEngine();
+      protected override void CopyFromBufferToEngine() {
+    
+        Controller.enabled = false;
 
-    // Re-enable CC
-    Controller.enabled = true;
-  }
+    
+        base.CopyFromBufferToEngine();
 
-  /// <summary>
-  /// Basic implementation of a jump impulse (immediately integrates a vertical component to Velocity).
-  /// <param name="ignoreGrounded">Jump even if not in a grounded state.</param>
-  /// <param name="overrideImpulse">Optional field to override the jump impulse. If null, <see cref="jumpImpulse"/> is used.</param>
-  /// </summary>
-  public virtual void Jump(bool ignoreGrounded = false, float? overrideImpulse = null) {
-    if (IsGrounded || ignoreGrounded) {
-      var newVel = Velocity;
-      newVel.y += overrideImpulse ?? jumpImpulse;
-      Velocity =  newVel;
-    }
-  }
+    
+        Controller.enabled = true;
+      }
 
-  /// <summary>
-  /// Basic implementation of a character controller's movement function based on an intended direction.
-  /// <param name="direction">Intended movement direction, subject to movement query, acceleration and max speed values.</param>
-  /// </summary>
-  public virtual void Move(Vector3 direction) {
-    var deltaTime    = Runner.DeltaTime;
-    var previousPos  = transform.position;
-    var moveVelocity = Velocity;
+  
+      public virtual void Jump(bool ignoreGrounded = false, float? overrideImpulse = null) {
+        if (IsGrounded || ignoreGrounded) {
+          var newVel = Velocity;
+          newVel.y += overrideImpulse ?? jumpImpulse;
+          Velocity =  newVel;
+        }
+      }
 
-    direction = direction.normalized;
+  
+      public virtual void Move(Vector3 direction) 
+      {
+            var deltaTime    = Runner.DeltaTime;
+            var previousPos  = transform.position;
+            var moveVelocity = Velocity;
 
-    if (IsGrounded && moveVelocity.y < 0) {
-      moveVelocity.y = 0f;
-    }
+            direction = direction.normalized;
 
-    moveVelocity.y += gravity * Runner.DeltaTime;
+            if (IsGrounded && moveVelocity.y < 0) {
+              moveVelocity.y = 0f;
+            }
 
-    var horizontalVel = default(Vector3);
-    horizontalVel.x = moveVelocity.x;
-    horizontalVel.z = moveVelocity.z;
+            moveVelocity.y += gravity * Runner.DeltaTime;
 
-    if (direction == default) {
-      horizontalVel = Vector3.Lerp(horizontalVel, default, braking * deltaTime);
-    } else {
-      horizontalVel      = Vector3.ClampMagnitude(horizontalVel + direction * acceleration * deltaTime, maxSpeed);
-      transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(direction), rotationSpeed * Runner.DeltaTime);
-    }
+            var horizontalVel = default(Vector3);
+            horizontalVel.x = moveVelocity.x;
+            horizontalVel.z = moveVelocity.z;
 
-    moveVelocity.x = horizontalVel.x;
-    moveVelocity.z = horizontalVel.z;
+            if (direction == default) 
+            {
+                 horizontalVel = Vector3.Lerp(horizontalVel, default, braking * deltaTime);
+            } 
+            else 
+            {
+              horizontalVel      = Vector3.ClampMagnitude(horizontalVel + direction * acceleration * deltaTime, maxSpeed);
+              transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(direction), rotationSpeed * Runner.DeltaTime);
+            }
 
-    Controller.Move(moveVelocity * deltaTime);
+            moveVelocity.x = horizontalVel.x;
+            moveVelocity.z = horizontalVel.z;
 
-    Velocity   = (transform.position - previousPos) * Runner.Simulation.Config.TickRate;
-    IsGrounded = Controller.isGrounded;
-  }
+            Controller.Move(moveVelocity * deltaTime);
+
+            Velocity   = (transform.position - previousPos) * Runner.Simulation.Config.TickRate;
+            IsGrounded = Controller.isGrounded;
+      }
+
+   
 }

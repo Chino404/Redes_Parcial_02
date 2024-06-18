@@ -9,6 +9,7 @@ public class LocalHostPlayerInputs : MonoBehaviour
 
     bool _isJumpPressed;
     bool _isFirePressed;
+    bool _isDashPressed;
 
     void Awake()
     {
@@ -28,14 +29,20 @@ public class LocalHostPlayerInputs : MonoBehaviour
         {
             _isFirePressed = true;
         }
+
+        if (Input.GetKeyDown(KeyCode.LeftShift))
+        {
+            _isDashPressed=true;
+        }
     }
 
     public NetworkInputData GetLocalInputs()
     {
         _inputData.isJumpPressed = _isJumpPressed;
         _inputData.isFirePressed = _isFirePressed;
+        _inputData.isDashPressed = _isDashPressed;
 
-        _isJumpPressed = _isFirePressed = false;
+        _isJumpPressed = _isFirePressed =_isDashPressed = false;
         //_isJumpPressed = false;
         //_isFirePressed = false;
 
