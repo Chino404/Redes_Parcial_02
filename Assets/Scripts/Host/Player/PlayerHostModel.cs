@@ -6,6 +6,13 @@ using UnityEngine;
 public class PlayerHostModel : NetworkCharacterControllerPrototype
 {
     [SerializeField] NetworkMecanimAnimator _mecanimAnim;
+    private TrailRenderer _tr;
+
+    public override void Spawned()
+    {
+        _tr = GetComponent<TrailRenderer>();
+
+    }
 
     public override void Move(Vector3 direction)
     {
@@ -43,5 +50,30 @@ public class PlayerHostModel : NetworkCharacterControllerPrototype
         IsGrounded = Controller.isGrounded;
 
         _mecanimAnim.Animator.SetFloat("MovementValue", Velocity.sqrMagnitude);
+    }
+
+    public void Dash()
+    {
+        if (_canDash)
+        {
+            StartCoroutine(Dashing());
+        }
+    }
+
+    IEnumerator Dashing()
+    {
+        _canDash = false;
+        _isDashing = true;
+        //float originalGravity = _networkRB.Rigidbody.;
+        //networkRB.Rigidbody.gravityScale = 0f;
+        //_networkRB.Rigidbody.velocity = new Vector2(transform.localScale.x * _dashingPower, 0f);
+        Velocity = new Vector3(transform.localScale.x * _dashingPower, 0f, 0f);
+        _tr.emitting = true;
+        yield return new WaitForSeconds(_dashingTime);
+        _tr.emitting = false;
+        //_networkRB.Rigidbody.gravityScale = originalGravity;
+        _isDashing = false;
+        yield return new WaitForSeconds(_dashingCooldown);
+        _canDash = true;
     }
 }

@@ -46,6 +46,9 @@ public class PlayerHostController : NetworkBehaviour
 
         //Shoot
         if (_localInputs.isFirePressed) _playerHostGun.Shoot();
+
+        //Dash
+        if (_localInputs.isDashPressed) _playerModel.Dash();
     }
 
 }
