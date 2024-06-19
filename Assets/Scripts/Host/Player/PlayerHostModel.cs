@@ -67,11 +67,10 @@ public class PlayerHostModel : NetworkCharacterControllerPrototype
         //float originalGravity = _networkRB.Rigidbody.;
         //networkRB.Rigidbody.gravityScale = 0f;
         //_networkRB.Rigidbody.velocity = new Vector2(transform.localScale.x * _dashingPower, 0f);
-        Velocity = new Vector3(transform.localScale.x * _dashingPower, 0f, 0f);
+        Velocity = transform.forward * _dashingPower;
         _tr.emitting = true;
         yield return new WaitForSeconds(_dashingTime);
         _tr.emitting = false;
-        //_networkRB.Rigidbody.gravityScale = originalGravity;
         _isDashing = false;
         yield return new WaitForSeconds(_dashingCooldown);
         _canDash = true;
