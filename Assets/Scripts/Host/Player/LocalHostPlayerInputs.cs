@@ -18,7 +18,7 @@ public class LocalHostPlayerInputs : MonoBehaviour
 
     void Update()
     {
-        _inputData.xMovement = Input.GetAxis("Horizontal");
+        _inputData.xMovement = Input.GetAxisRaw("Horizontal");
 
         if(Input.GetKeyDown(KeyCode.W)) 
         { 
