@@ -11,8 +11,6 @@ public class SessionItem : MonoBehaviour
     [SerializeField] TextMeshProUGUI _sessionName, _playerCounts;
     [SerializeField] Button _joinLobby;
 
-
-    // Start is called before the first frame update
     public void SetInfo(SessionInfo session, Action<SessionInfo> onClick)
     {
         _sessionName.text = session.Name;

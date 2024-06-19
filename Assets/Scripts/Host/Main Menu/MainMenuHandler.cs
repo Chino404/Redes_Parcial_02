@@ -6,6 +6,8 @@ using TMPro;
 
 public class MainMenuHandler : MonoBehaviour
 {
+    [SerializeField] AudioSource _audioSource;
+
     [SerializeField] NetworkRunnerHandler _networkRunner;
 
     [Space(25), Header("Panels"), SerializeField] GameObject _joinLobbyPanel;
@@ -22,6 +24,11 @@ public class MainMenuHandler : MonoBehaviour
 
     private void Start()
     {
+        _audioSource = GetComponent<AudioSource>();
+
+        _audioSource.Play();
+        
+
         _joinLobbyPanel.SetActive(true);
         _joiningLobbyStatusPanel.SetActive(false);
         _sessionBrowserPanel.SetActive(false);
