@@ -5,6 +5,7 @@ using Fusion;
 
 public class PlayerHostGun : NetworkBehaviour
 {
+    [SerializeField] AudioSource _audioSource;
     [SerializeField] BulletHost _bulletPrefab;
     [SerializeField] Transform _bulletSpawner;
     [SerializeField] ParticleSystem _shootParticle;
@@ -22,6 +23,7 @@ public class PlayerHostGun : NetworkBehaviour
         _lastShootTime = Time.time;
 
         StartCoroutine(ShootCooldown());
+        _audioSource.Play();
         Runner.Spawn(_bulletPrefab, _bulletSpawner.position, transform.rotation);
 
         #region Raycast
