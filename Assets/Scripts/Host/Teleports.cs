@@ -1,11 +1,15 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 public class Teleports : MonoBehaviour
 {
     [SerializeField] Teleports _nextTeleport;
     public bool _isTeleporting = false;
+    public event Action OnRespawn = delegate { };
+
+    
 
     //private void Update()
     //{
@@ -23,9 +27,10 @@ public class Teleports : MonoBehaviour
         {
             _nextTeleport._isTeleporting = true;
             _isTeleporting = true;
-            float z = other.transform.position.z;
-            other.transform.position = new Vector3(_nextTeleport.transform.position.x, _nextTeleport.transform.position.y,z);
+            //float z = other.transform.position.z;
+            //other.transform.position = new Vector3(_nextTeleport.transform.position.x, _nextTeleport.transform.position.y,z);
             
+            OnRespawn();
 
             StartCoroutine(TeleportCoolDown());
 
@@ -36,11 +41,8 @@ public class Teleports : MonoBehaviour
 
     IEnumerator TeleportCoolDown()
     {
-       
-
-        yield return new WaitForSeconds(2f);
+        yield return new WaitForSeconds(1f);
         _nextTeleport._isTeleporting = false;
         _isTeleporting = false;
-
     }
 }

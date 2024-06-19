@@ -285,6 +285,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _nextTeleport: {fileID: 869832206}
   _isTeleporting: 0
+  destinationPortal: {fileID: 869832210}
+  isActive: 1
 --- !u!135 &272712898
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -1042,6 +1044,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _nextTeleport: {fileID: 272712897}
   _isTeleporting: 0
+  destinationPortal: {fileID: 272712901}
+  isActive: 1
 --- !u!135 &869832207
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -1122,7 +1126,7 @@ Transform:
   m_GameObject: {fileID: 869832205}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -10.92, y: 5.7, z: -0.12}
+  m_LocalPosition: {x: -10.56, y: 0.79, z: -0.12}
   m_LocalScale: {x: 1.769, y: 1.769, z: 1.769}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -2222,11 +2226,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: bb8b40fdac3e41242b9ee989d1403fe4, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -13.31
+      value: -10.6
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: bb8b40fdac3e41242b9ee989d1403fe4, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 3.36
+      value: -0.96
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: bb8b40fdac3e41242b9ee989d1403fe4, type: 3}
       propertyPath: m_LocalPosition.z

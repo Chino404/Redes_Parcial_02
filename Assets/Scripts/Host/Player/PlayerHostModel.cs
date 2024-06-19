@@ -8,9 +8,11 @@ public class PlayerHostModel : NetworkCharacterControllerPrototype
     [SerializeField] NetworkMecanimAnimator _mecanimAnim;
     private TrailRenderer _tr;
 
+
     public override void Spawned()
     {
         _tr = GetComponent<TrailRenderer>();
+        GetComponent<LifeHostHandler>().OnRespawn += () => TeleportToPosition(Vector3.zero);
 
     }
 
