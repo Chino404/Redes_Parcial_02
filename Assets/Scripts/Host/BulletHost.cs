@@ -6,11 +6,12 @@ using UnityEngine;
 public class BulletHost : NetworkRigidbody
 {
     TickTimer _expireTimer = TickTimer.None;
+    [SerializeField] private float _speed = 20f;
 
     public override void Spawned()
     {
         base.Spawned();
-        Rigidbody.AddForce(transform.forward * 10f, ForceMode.VelocityChange);
+        Rigidbody.AddForce(transform.forward * _speed, ForceMode.VelocityChange);
 
         if (Object.HasStateAuthority) _expireTimer = TickTimer.CreateFromSeconds(Runner, 3f);
     }
