@@ -21,6 +21,8 @@
         [SerializeField] protected float _dashingCooldown = 0.5f;
         protected float _dashingTime = 0.2f;
         protected bool _canDash = true, _isDashing = false;
+    protected bool doubleJump;
+
 
     [Networked]
       [HideInInspector]
@@ -67,15 +69,23 @@
       }
 
   
-      public virtual void Jump(bool ignoreGrounded = false, float? overrideImpulse = null) {
-        if (IsGrounded || ignoreGrounded) {
+      public virtual void Jump(bool ignoreGrounded = false, float? overrideImpulse = null) 
+      {
+        if (IsGrounded || ignoreGrounded||doubleJump) 
+        {
           var newVel = Velocity;
           newVel.y += overrideImpulse ?? jumpImpulse;
+            doubleJump = !doubleJump;
           Velocity =  newVel;
         }
       }
 
-  
+        public void RestartDoubleJump()
+        {
+        if (IsGrounded) doubleJump = false;
+        }
+            
+        
       public virtual void Move(Vector3 direction) 
       {
             var deltaTime    = Runner.DeltaTime;
