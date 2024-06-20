@@ -5,7 +5,7 @@ using TMPro;
 
 public class NicknameItem : MonoBehaviour
 {
-    const float Y_Offset = 2f;
+    const float Y_Offset = 3f;
 
     Transform _owner;
 

@@ -46,8 +46,6 @@ public class LocalHostPlayerInputs : MonoBehaviour
         //_isJumpPressed = false;
         //_isFirePressed = false;
 
-        Debug.Log("Obteniendo inputs");
-
         return _inputData;
     }
 }

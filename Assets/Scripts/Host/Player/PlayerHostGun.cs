@@ -5,7 +5,6 @@ using Fusion;
 
 public class PlayerHostGun : NetworkBehaviour
 {
-    [SerializeField] AudioSource _audioSource;
     [SerializeField] BulletHost _bulletPrefab;
     [SerializeField] Transform _bulletSpawner;
     [SerializeField] ParticleSystem _shootParticle;
@@ -16,6 +15,11 @@ public class PlayerHostGun : NetworkBehaviour
     [Networked(OnChanged = nameof(OnFiringChanged))]
     bool IsFiring { get; set; }
 
+    public void Start()
+    {
+        AudioManager.instance.StopSFX();
+    }
+
     public void Shoot()
     {
         if (Time.time - _lastShootTime < _shootCooldown) return;
@@ -23,7 +27,7 @@ public class PlayerHostGun : NetworkBehaviour
         _lastShootTime = Time.time;
 
         StartCoroutine(ShootCooldown());
-        _audioSource.Play();
+        if(Object.HasInputAuthority)AudioManager.instance.PlaySFX(AudioManager.instance.shoot);
         Runner.Spawn(_bulletPrefab, _bulletSpawner.position, transform.rotation);
 
         #region Raycast
@@ -55,7 +59,7 @@ public class PlayerHostGun : NetworkBehaviour
 
         if (!oldFiring && currentFiring)
         {
-            changed.Behaviour._shootParticle.Play();
+            changed.Behaviour._shootParticle?.Play();
         }
     }
 }

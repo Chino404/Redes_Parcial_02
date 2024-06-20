@@ -1,4 +1,5 @@
 using Fusion;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -8,12 +9,16 @@ public class PlayerHostModel : NetworkCharacterControllerPrototype
     [SerializeField] NetworkMecanimAnimator _mecanimAnim;
     private TrailRenderer _tr;
 
-
     public override void Spawned()
     {
         _tr = GetComponent<TrailRenderer>();
         GetComponent<LifeHostHandler>().OnRespawn += () => TeleportToPosition(Vector3.zero);
 
+    }
+
+    private void Start()
+    {
+        GameManager.instance.players.Add(this);
     }
 
     public override void Move(Vector3 direction)

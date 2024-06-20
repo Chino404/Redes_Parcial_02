@@ -7,7 +7,6 @@ public class NickNameHandler : MonoBehaviour
     public static NickNameHandler Instance;
 
     List<NicknameItem> _itemNames = new List<NicknameItem>();
-
     [SerializeField] NicknameItem _nicknamePrefab;
 
     private void Awake()
