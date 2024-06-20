@@ -10,6 +10,7 @@ public class NetworkHostPlayer : NetworkBehaviour
     public event Action OnPlayerDespawn;
 
     private NicknameItem _myNickname;
+    private LifeBarItem _lifeBar;
 
     [Networked(OnChanged = nameof(OnNickNameChanged))]
     private string Nickname {  get; set; }
@@ -17,6 +18,7 @@ public class NetworkHostPlayer : NetworkBehaviour
     public override void Spawned()
     {
         _myNickname = NickNameHandler.Instance.CreateNewNickName(this);
+        _lifeBar = LifeHostHandler.Instance.CreateBarLife(this);
 
         if (Object.HasInputAuthority)
         {
@@ -24,11 +26,11 @@ public class NetworkHostPlayer : NetworkBehaviour
 
             RPC_SetNewNickName(PlayerPrefs.GetString("NickNameSave","Ricardo"));
 
-            GetComponentInChildren<SkinnedMeshRenderer>().material.color = Color.blue;
+            //GetComponentInChildren<SkinnedMeshRenderer>().material.color = Color.blue;
         }
         else
         {
-            GetComponentInChildren<SkinnedMeshRenderer>().material.color = Color.cyan;
+            GetComponentInChildren<SkinnedMeshRenderer>().material.color = Color.yellow;
         }
     }
 
@@ -49,4 +51,5 @@ public class NetworkHostPlayer : NetworkBehaviour
 
         behaviour._myNickname.UpdateName(behaviour.Nickname);
     }
+
 }

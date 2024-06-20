@@ -7,6 +7,7 @@ public class BulletHost : NetworkRigidbody
 {
     TickTimer _expireTimer = TickTimer.None;
     [SerializeField] private float _speed = 20f;
+    [SerializeField] private byte _damage = 25;
 
     public override void Spawned()
     {
@@ -29,7 +30,7 @@ public class BulletHost : NetworkRigidbody
 
         if (other.TryGetComponent(out LifeHostHandler enemy))
         {
-            enemy.TakeDamage(25);
+            enemy.TakeDamage(_damage);
         }
 
         DespawnObject();

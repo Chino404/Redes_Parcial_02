@@ -4,12 +4,19 @@ using System.Collections.Generic;
 using UnityEngine;
 using Fusion;
 
+//Crear una barra de vida por player
 public class LifeHostHandler : NetworkBehaviour
 {
-    private const byte _fullLife = 100;
+
+    public static LifeHostHandler Instance;
+
+    private float _maxLife = 100;
+
+    List<LifeBarItem> _lifeBarList = new List<LifeBarItem>();
+    [SerializeField] LifeBarItem _prefabLifeBar;
 
     [Networked(OnChanged =nameof(OnLifeChanged))]
-    private byte CurrentLife { get; set; }
+    public float CurrentLife { get; set; }
 
     [SerializeField] GameObject _visualObject;
     [SerializeField] byte _liveAmount = 3;
@@ -20,15 +27,48 @@ public class LifeHostHandler : NetworkBehaviour
     public event Action OnRespawn = delegate { };
     public event Action<bool> OnEnableControls = delegate { };
 
-    public override void Spawned()
+    private void Awake()
     {
-        CurrentLife = _fullLife;
+        //if (Instance == null) Instance = this;
+        //else Destroy(gameObject);
+
+        Instance = this;
     }
 
-    public void TakeDamage(byte damage)
+    private void Start()
+    {
+        CurrentLife = _maxLife;
+    }
+
+    public LifeBarItem CreateBarLife(NetworkHostPlayer player)
+    {
+        var lifeBar = Instantiate(_prefabLifeBar, transform);
+        _lifeBarList.Add(lifeBar);
+
+        lifeBar.SetTarget(player.transform);
+
+        player.OnPlayerDespawn += () =>
+        {
+            _lifeBarList.Remove(lifeBar);
+            Destroy(lifeBar.gameObject);
+        };
+
+        return lifeBar;
+    }
+
+    void LateUpdate()
+    {
+        foreach (var item in _lifeBarList) item.UpdatePosition();
+    }
+
+    public void TakeDamage(float damage)
     {
         if (damage > CurrentLife) damage = CurrentLife;
-        CurrentLife -= damage;
+
+        //CurrentLife -= damage;
+        RPC_TakeDamage(damage);
+        AudioManager.instance.PlaySFX(AudioManager.instance.takeDamage);
+
 
         if (CurrentLife != 0) return;
 
@@ -48,7 +88,7 @@ public class LifeHostHandler : NetworkBehaviour
 
         yield return new WaitForSeconds(3f);
         IsDead = false;
-        CurrentLife = _fullLife;
+        CurrentLife = _maxLife;
         OnRespawn();
     }
 
@@ -91,8 +131,17 @@ public class LifeHostHandler : NetworkBehaviour
         Runner.Despawn(Object);
     }
 
+    //[Rpc(RpcSources.InputAuthority, RpcTargets.StateAuthority)]
+    [Rpc(RpcSources.All, RpcTargets.StateAuthority)]
+    void RPC_TakeDamage(float damage)
+    {
+        CurrentLife -= damage;
+    }
+
     static void OnLifeChanged(Changed<LifeHostHandler> changed)
     {
         //todo lo que vimos de barra de vida
+        var updateLife = changed.Behaviour;
+        updateLife._prefabLifeBar.UpdateLifeBar(updateLife.CurrentLife / updateLife._maxLife);       
     }
 }
