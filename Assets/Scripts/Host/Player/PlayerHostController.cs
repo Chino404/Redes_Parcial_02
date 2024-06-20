@@ -43,6 +43,7 @@ public class PlayerHostController : NetworkBehaviour
 
         //Jump
         if(_localInputs.isJumpPressed) _playerModel.Jump();
+        if (!_localInputs.isJumpPressed) _playerModel.RestartDoubleJump();
 
         //Shoot
         if (_localInputs.isFirePressed) _playerHostGun.Shoot();

@@ -283,6 +283,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 834144f2fca5b5b469bb29f4ae514e26, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _interpolationDataSource: 0
   _nextTeleport: {fileID: 869832206}
   _isTeleporting: 0
 --- !u!135 &272712898
@@ -512,7 +513,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!223 &432625688
 Canvas:
   m_ObjectHideFlags: 0
@@ -713,8 +714,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.86812377, y: 1, z: 1}
-  m_Center: {x: -0.13858484, y: 0, z: 0}
+  m_Size: {x: 1.026097, y: 0.36825606, z: 1}
+  m_Center: {x: -0.059598178, y: -0.31587222, z: 0}
 --- !u!23 &491735216
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -1271,6 +1272,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 834144f2fca5b5b469bb29f4ae514e26, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _interpolationDataSource: 0
   _nextTeleport: {fileID: 272712897}
   _isTeleporting: 0
 --- !u!135 &869832207
@@ -1884,8 +1886,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.86812377, y: 1, z: 1}
-  m_Center: {x: -0.13858484, y: 0, z: 0}
+  m_Size: {x: 1.0156896, y: 0.34184787, z: 1}
+  m_Center: {x: -0.06480196, y: -0.32907656, z: 4.9245754e-17}
 --- !u!23 &1129158722
 MeshRenderer:
   m_ObjectHideFlags: 0
