@@ -13,6 +13,7 @@ public class AudioManager : NetworkBehaviour
 
     [Space(25), Header("-------- Audio Clip --------")]
     public AudioClip musicLobby;
+    public AudioClip musicGame;
     public AudioClip shoot;
     public AudioClip takeDamage;
 
@@ -38,5 +39,14 @@ public class AudioManager : NetworkBehaviour
     public void StopSFX()
     {
         _SFXSource?.Stop();
+    }
+
+    public void PlayMusic(AudioClip clip)
+    {
+        _musicSource?.PlayOneShot(clip);
+    }
+    public void StopMusic()
+    {
+        _musicSource?.Stop();
     }
 }
