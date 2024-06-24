@@ -23,6 +23,7 @@ public class PlayerHostModel : NetworkCharacterControllerPrototype
 
     private void Start()
     {
+        
         GameManager.instance.players.Add(this);
     }
 

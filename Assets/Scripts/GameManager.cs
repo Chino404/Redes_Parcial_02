@@ -16,11 +16,15 @@ public class GameManager : NetworkBehaviour
     private void Awake()
     {
         instance = this;
+        Time.timeScale = 0;
+
+
     }
 
     public override void Spawned()
     {
-        //Time.timeScale = 0;
+        
+       
     }
 
     public override void FixedUpdateNetwork()
@@ -33,8 +37,8 @@ public class GameManager : NetworkBehaviour
         if (_isGameStarting == true)
         {
 
-            //Time.timeScale = 1;
             _canvas.gameObject.SetActive(false);
+            Time.timeScale = 1;
 
             if(!_playMusicGame)
             {
