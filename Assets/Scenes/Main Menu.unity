@@ -603,7 +603,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e83d4be96d11227419b12946f360c633, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _networkPrefab: {fileID: 3754785012677165109, guid: 094cae63eab66384cad2fccfdde3f599, type: 3}
+  _networkPrefab: {fileID: 6079531753194445235, guid: 57c2398ba78075242b75dd391f9119e5, type: 3}
 --- !u!4 &278050542
 Transform:
   m_ObjectHideFlags: 0

@@ -4,17 +4,25 @@ using UnityEngine;
 using Fusion;
 using Fusion.Sockets;
 using System;
+using System.Linq;
 
 public class SpawnHostPlayer : MonoBehaviour, INetworkRunnerCallbacks
 {
     [SerializeField] NetworkHostPlayer _playerPrefab;
     LocalHostPlayerInputs _localInputs;
+    public static Transform spawn1, spawn2;
+
 
     public void OnPlayerJoined(NetworkRunner runner, PlayerRef player) 
     { 
         if(runner.IsServer)
         {
-            runner.Spawn(_playerPrefab, Vector3.zero, Quaternion.identity, player);
+            if(runner.ActivePlayers.Count()>1)
+                runner.Spawn(_playerPrefab, spawn1.position, Quaternion.identity, player);
+
+            else
+                runner.Spawn(_playerPrefab, spawn2.position, Quaternion.identity, player);
+
         }
     }
     public void OnInput(NetworkRunner runner, NetworkInput input) 
