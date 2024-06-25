@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using static UnityEngine.GraphicsBuffer;
 
 public class LifeBarItem : MonoBehaviour
 {
@@ -14,8 +15,21 @@ public class LifeBarItem : MonoBehaviour
 
     public void UpdateLifeBar(float amount) => _lifeBarImage.fillAmount = amount;
 
-    public void SetTarget(Transform target)
+    //public void SetTarget(Transform target)
+    //{
+    //    _target = target;
+    //}
+
+    public LifeBarItem SetTarget(NetworkHostPlayer target)
     {
-        _target = target;
+        _target = target.transform;
+
+        return this;
+    }
+
+    public LifeBarItem SetLife(LifeHostHandler life)
+    {
+        life.OnLifeUpdate += UpdateLifeBar;
+        return this;
     }
 }

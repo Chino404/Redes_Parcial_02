@@ -30,7 +30,7 @@ public class NetworkHostPlayer : NetworkBehaviour
         }
         else
         {
-            GetComponentInChildren<SkinnedMeshRenderer>().material.color = Color.yellow;
+            GetComponentInChildren<SkinnedMeshRenderer>().material.color = Color.blue;
         }
     }
 
