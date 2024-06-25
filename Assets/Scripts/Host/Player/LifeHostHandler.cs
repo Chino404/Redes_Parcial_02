@@ -24,6 +24,7 @@ public class LifeHostHandler : NetworkBehaviour
     [Networked(OnChanged = nameof(OnDeadChanged))]
     private bool IsDead { get; set; }
 
+    public event Action<float> OnLifeUpdate = delegate { };
     public event Action OnRespawn = delegate { };
     public event Action<bool> OnEnableControls = delegate { };
 
@@ -42,10 +43,8 @@ public class LifeHostHandler : NetworkBehaviour
 
     public LifeBarItem CreateBarLife(NetworkHostPlayer player)
     {
-        var lifeBar = Instantiate(_prefabLifeBar, transform);
+        LifeBarItem lifeBar = Instantiate(_prefabLifeBar, transform).SetTarget(player).SetLife(this);
         _lifeBarList.Add(lifeBar);
-
-        lifeBar.SetTarget(player.transform);
 
         player.OnPlayerDespawn += () =>
         {
@@ -133,7 +132,7 @@ public class LifeHostHandler : NetworkBehaviour
 
     //[Rpc(RpcSources.InputAuthority, RpcTargets.StateAuthority)]
     [Rpc(RpcSources.All, RpcTargets.StateAuthority)]
-    void RPC_TakeDamage(float damage)
+    public void RPC_TakeDamage(float damage)
     {
         CurrentLife -= damage;
     }
@@ -141,7 +140,7 @@ public class LifeHostHandler : NetworkBehaviour
     static void OnLifeChanged(Changed<LifeHostHandler> changed)
     {
         //todo lo que vimos de barra de vida
-        var updateLife = changed.Behaviour;
-        updateLife._prefabLifeBar.UpdateLifeBar(updateLife.CurrentLife / updateLife._maxLife);       
+        var updateLife = changed.Behaviour;  
+        updateLife.OnLifeUpdate(updateLife.CurrentLife / updateLife._maxLife);       
     }
 }
