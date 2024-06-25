@@ -11,33 +11,26 @@ public class GameManager : NetworkBehaviour
     public List<PlayerHostModel> players;
     [SerializeField] private bool _isGameStarting;
     private bool _playMusicGame;
-    [SerializeField] Canvas _canvas;
+
+    [Header("Canvas")]
+    [SerializeField] Canvas _waitingCanvas;
+    public Canvas loseCanvas;
+    public Canvas winCanvas;
 
     private void Awake()
     {
         instance = this;
         Time.timeScale = 0;
 
-
-    }
-
-    public override void Spawned()
-    {
-        
-       
     }
 
     public override void FixedUpdateNetwork()
     {
-        if (Runner.ActivePlayers.Count() >= 2)
-        {
-            _isGameStarting = true;
-        }
 
-        if (_isGameStarting == true)
+        if (_isGameStarting)
         {
 
-            _canvas.gameObject.SetActive(false);
+            _waitingCanvas.gameObject.SetActive(false);
             Time.timeScale = 1;
 
             if(!_playMusicGame)
@@ -47,5 +40,26 @@ public class GameManager : NetworkBehaviour
                 AudioManager.instance.PlayMusic(AudioManager.instance.musicGame);
             }
         }
+
+        //if(_isGameStarting && players.Count() < 2) CanvasWin(); 
+
+        else if (players.Count() >= 2)
+        {
+            _isGameStarting = true;
+        }
     }
+
+    public void CanvasLost()
+    {
+        Debug.Log("PERDI");
+        loseCanvas.gameObject.SetActive(true);
+    }
+
+    public void CanvasWin()
+    {
+        //Time.timeScale = 0;
+        Debug.Log("GANE");
+        winCanvas.gameObject.SetActive(true);
+    }
+
 }

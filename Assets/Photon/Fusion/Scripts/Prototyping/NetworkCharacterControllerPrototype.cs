@@ -1,5 +1,6 @@
     using System;
-    using Fusion;
+using System.Collections;
+using Fusion;
     using UnityEngine;
     
 
@@ -9,6 +10,7 @@
     // ReSharper disable once CheckNamespace
     public class NetworkCharacterControllerPrototype : NetworkTransform 
     {
+
       [Header("Character Controller Settings")]
       public float gravity       = -20.0f;
       public float jumpImpulse   = 8.0f;
@@ -21,10 +23,10 @@
         [SerializeField] protected float _dashingCooldown = 0.5f;
         protected float _dashingTime = 0.2f;
         protected bool _canDash = true, _isDashing = false;
-    protected bool doubleJump;
+        protected bool doubleJump;
 
 
-    [Networked]
+      [Networked]
       [HideInInspector]
       public bool IsGrounded { get; set; }
 
@@ -32,6 +34,10 @@
       [HideInInspector]
       public Vector3 Velocity { get; set; }
 
+        [Networked(OnChanged = nameof(OnJumpChanged))]
+        bool IsJumping { get; set; }
+
+        public ParticleSystem _JumpParticleSystem;
  
       protected override Vector3 DefaultTeleportInterpolationVelocity => Velocity;
 
@@ -73,12 +79,32 @@
       {
         if (IsGrounded || ignoreGrounded||doubleJump) 
         {
+            StartCoroutine(JumpCooldown());
           var newVel = Velocity;
           newVel.y += overrideImpulse ?? jumpImpulse;
             doubleJump = !doubleJump;
           Velocity =  newVel;
         }
       }
+
+    IEnumerator JumpCooldown()
+    {
+        IsJumping = true;
+        yield return new WaitForSeconds(0.2f);
+        IsJumping = false;
+    }
+
+    static void OnJumpChanged(Changed<NetworkCharacterControllerPrototype> changed)
+    {
+        var currentJumping = changed.Behaviour.IsJumping;
+        changed.LoadOld();
+        var oldJumping = changed.Behaviour.IsJumping;
+
+        if (!oldJumping && currentJumping)
+        {
+            changed.Behaviour._JumpParticleSystem?.Play();
+        }
+    }
 
         public void RestartDoubleJump()
         {

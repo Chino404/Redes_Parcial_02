@@ -8,8 +8,6 @@ public class PlayerHostModel : NetworkCharacterControllerPrototype
 {
     [SerializeField] NetworkMecanimAnimator _mecanimAnim;
     private TrailRenderer _tr;
-
-    
     
 
     public override void Spawned()
@@ -87,5 +85,11 @@ public class PlayerHostModel : NetworkCharacterControllerPrototype
         _isDashing = false;
         yield return new WaitForSeconds(_dashingCooldown);
         _canDash = true;
+    }
+
+    private void OnDestroy()
+    {
+        //GameManager.instance.CanvasLost();
+        GameManager.instance.players.Remove(this);
     }
 }
