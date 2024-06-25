@@ -270,7 +270,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &272712897
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1330,7 +1330,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &869832206
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2482,6 +2482,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: MineEntrance
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: bb8b40fdac3e41242b9ee989d1403fe4, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2742730262684272557, guid: bb8b40fdac3e41242b9ee989d1403fe4, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
@@ -2747,6 +2751,10 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: bb8b40fdac3e41242b9ee989d1403fe4, type: 3}
       propertyPath: m_Name
       value: MineEntrance (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: bb8b40fdac3e41242b9ee989d1403fe4, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2742730262684272557, guid: bb8b40fdac3e41242b9ee989d1403fe4, type: 3}
       propertyPath: m_Materials.Array.data[0]
