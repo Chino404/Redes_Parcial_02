@@ -34,9 +34,9 @@ public class PlayerHostController : NetworkBehaviour
 
     public override void FixedUpdateNetwork()
     {
-        //Debug.Log("Previo obtener inputs en controller");
+
         if (!GetInput(out _localInputs)) return;
-        //Debug.Log("Obteniendo inputs en controller");
+
         //Movement
         _direction = Vector3.forward * _localInputs.xMovement;
         _playerModel.Move(_direction);

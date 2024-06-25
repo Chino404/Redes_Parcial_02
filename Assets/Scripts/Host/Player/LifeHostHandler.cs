@@ -119,12 +119,13 @@ public class LifeHostHandler : NetworkBehaviour
     {
         if (!Object.HasInputAuthority)
         {
-            Runner.Disconnect(Object.InputAuthority);
+            Runner.Despawn(Object);
+            //Runner.Disconnect(Object.InputAuthority);
         }
-
         else
         {
             //Activar canvas derrota
+            //GameManager.instance.CanvasLost();
         }
 
         Runner.Despawn(Object);
