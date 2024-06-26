@@ -26,7 +26,6 @@ public class NetworkHostPlayer : NetworkBehaviour
 
             RPC_SetNewNickName(PlayerPrefs.GetString("NickNameSave","Ricardo"));
 
-            //GetComponentInChildren<SkinnedMeshRenderer>().material.color = Color.blue;
         }
         else
         {

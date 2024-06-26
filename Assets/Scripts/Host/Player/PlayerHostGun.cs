@@ -29,7 +29,6 @@ public class PlayerHostGun : NetworkBehaviour
         StartCoroutine(ShootCooldown());
         if(Object.HasInputAuthority)AudioManager.instance.PlaySFX(AudioManager.instance.shoot);
         Runner.Spawn(_bulletPrefab, _bulletSpawner.position, transform.rotation);
-
         #region Raycast
         /*var Raycast = Runner.LagCompensation.Raycast(origin: _bulletSpawner.position,
                                                      direction: _bulletSpawner.forward,

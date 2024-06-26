@@ -20,9 +20,14 @@ public class LifeBarItem : MonoBehaviour
     //    _target = target;
     //}
 
+    private void LateUpdate()
+    {
+        transform.LookAt(Camera.main.transform);
+    }
     public LifeBarItem SetTarget(NetworkHostPlayer target)
     {
         _target = target.transform;
+        
 
         return this;
     }

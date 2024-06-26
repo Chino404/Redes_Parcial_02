@@ -50,6 +50,7 @@ public class LifeHostHandler : NetworkBehaviour
         {
             _lifeBarList.Remove(lifeBar);
             Destroy(lifeBar.gameObject);
+
         };
 
         return lifeBar;
@@ -74,6 +75,9 @@ public class LifeHostHandler : NetworkBehaviour
         _liveAmount--;
         if(_liveAmount==0)
         {
+           
+            //GameManager.instance.RPC_IsLose();
+
             Disconnect();
             return;
         }
@@ -119,20 +123,20 @@ public class LifeHostHandler : NetworkBehaviour
     {
         if (!Object.HasInputAuthority)
         {
-            Runner.Despawn(Object);
-            //Runner.Disconnect(Object.InputAuthority);
+            //Runner.Despawn(Object);
+            Runner.Disconnect(Object.InputAuthority);
+            
         }
         else
         {
             //Activar canvas derrota
-            //GameManager.instance.CanvasLost();
+            GameManager.instance.CanvasLost();
         }
 
         Runner.Despawn(Object);
     }
 
-    //[Rpc(RpcSources.InputAuthority, RpcTargets.StateAuthority)]
-    [Rpc(RpcSources.All, RpcTargets.StateAuthority)]
+    [Rpc(RpcSources.All, RpcTargets.All)]
     public void RPC_TakeDamage(float damage)
     {
         CurrentLife -= damage;

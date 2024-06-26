@@ -219,5 +219,5 @@ MonoBehaviour:
     RotTeleportRadians: 1.5
   UseLegacySharedModeInterpolation: 0
   TargetInterpolationDelay: 0.03
-  _speed: 30
+  _speed: 10
   _damage: 25
