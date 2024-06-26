@@ -25,6 +25,11 @@ public class PlayerHostModel : NetworkCharacterControllerPrototype
         GameManager.instance.players.Add(this);
     }
 
+    private void Update()
+    {
+        if(Object.HasInputAuthority)GameManager.instance.CheckWin();
+    }
+
     public override void Move(Vector3 direction)
     {
         var deltaTime = Runner.DeltaTime;

@@ -32,6 +32,10 @@ public class SpawnHostPlayer : MonoBehaviour, INetworkRunnerCallbacks
         if (!_localInputs) _localInputs = NetworkHostPlayer.Local.GetComponent<LocalHostPlayerInputs>();
         else input.Set(_localInputs.GetLocalInputs());
     }
+    public void OnDisconnectedFromServer(NetworkRunner runner) 
+    {
+        GameManager.instance.CanvasLost();
+    }
 
     #region callbacks sin usar
     public void OnConnectedToServer(NetworkRunner runner) { }
@@ -46,7 +50,6 @@ public class SpawnHostPlayer : MonoBehaviour, INetworkRunnerCallbacks
     { }
     public void OnCustomAuthenticationResponse(NetworkRunner runner, Dictionary<string, object> data) { }
 
-    public void OnDisconnectedFromServer(NetworkRunner runner) { }
 
     public void OnHostMigration(NetworkRunner runner, HostMigrationToken hostMigrationToken)
     { }

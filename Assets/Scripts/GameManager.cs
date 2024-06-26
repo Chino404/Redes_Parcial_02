@@ -1,4 +1,5 @@
 using Fusion;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,6 +17,10 @@ public class GameManager : NetworkBehaviour
     [SerializeField] Canvas _waitingCanvas;
     public Canvas loseCanvas;
     public Canvas winCanvas;
+
+    //[Networked(OnChanged = nameof(OnCondisionChanged))]
+    public bool Win { get; set; }
+
 
     private void Awake()
     {
@@ -41,7 +46,7 @@ public class GameManager : NetworkBehaviour
             }
         }
 
-        //if(_isGameStarting && players.Count() < 2) CanvasWin(); 
+     
 
         else if (players.Count() >= 2)
         {
@@ -49,12 +54,27 @@ public class GameManager : NetworkBehaviour
         }
     }
 
+    [Rpc(RpcSources.StateAuthority, RpcTargets.Proxies)]
+    public void RPC_IsLose()
+    {
+
+        if (Object.HasInputAuthority)
+        {
+            CanvasLost();
+        }
+    }
+
+
     public void CanvasLost()
     {
         Debug.Log("PERDI");
         loseCanvas.gameObject.SetActive(true);
     }
 
+   public void CheckWin()
+    {
+        if (_isGameStarting && players.Count() == 1) CanvasWin();
+    }
     public void CanvasWin()
     {
         //Time.timeScale = 0;
