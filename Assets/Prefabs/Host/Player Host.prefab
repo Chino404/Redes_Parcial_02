@@ -281,7 +281,7 @@ MonoBehaviour:
   _prefabLifeBar: {fileID: 9135162402136004241, guid: 1b2d145f5c377424cb8b772b12cd67e6, type: 3}
   _CurrentLife: 0
   _visualObject: {fileID: 2837735525117131735}
-  _liveAmount: 3
+  _liveAmount: 1
 --- !u!114 &4544366812043888839
 MonoBehaviour:
   m_ObjectHideFlags: 0
