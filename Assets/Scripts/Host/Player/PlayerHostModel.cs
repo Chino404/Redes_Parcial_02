@@ -20,9 +20,9 @@ public class PlayerHostModel : NetworkCharacterControllerPrototype
     }
 
     private void Start()
-    {
-        
+    {  
         GameManager.instance.players.Add(this);
+        if (Object.HasStateAuthority) GameManager.instance.ActiveButton();
     }
 
     private void Update()
