@@ -17,6 +17,7 @@ public class GameManager : NetworkBehaviour
     [SerializeField] Canvas _waitingCanvas;
     public Canvas loseCanvas;
     public Canvas winCanvas;
+    public GameObject button;
 
     //[Networked(OnChanged = nameof(OnCondisionChanged))]
     public bool Win { get; set; }
@@ -32,27 +33,49 @@ public class GameManager : NetworkBehaviour
     public override void FixedUpdateNetwork()
     {
 
+        //if (_isGameStarting)
+        //{
+
+        //    _waitingCanvas.gameObject.SetActive(false);
+        //    Time.timeScale = 1;
+
+        //    if(!_playMusicGame)
+        //    {
+        //        _playMusicGame = true;
+        //        AudioManager.instance.StopMusic();
+        //        AudioManager.instance.PlayMusic(AudioManager.instance.musicGame);
+        //    }
+        //}
+
+     
+
+        if (players.Count() >= 2)
+        {
+            _isGameStarting = true;
+        }
+    }
+
+    public void ActiveButton() => button.SetActive(true);
+
+
+    [Rpc(RpcSources.StateAuthority, RpcTargets.All)]
+    public void RPC_StartDuel()
+    {
         if (_isGameStarting)
         {
 
             _waitingCanvas.gameObject.SetActive(false);
             Time.timeScale = 1;
 
-            if(!_playMusicGame)
+            if (!_playMusicGame)
             {
                 _playMusicGame = true;
                 AudioManager.instance.StopMusic();
                 AudioManager.instance.PlayMusic(AudioManager.instance.musicGame);
             }
         }
-
-     
-
-        else if (players.Count() >= 2)
-        {
-            _isGameStarting = true;
-        }
     }
+
 
     [Rpc(RpcSources.StateAuthority, RpcTargets.Proxies)]
     public void RPC_IsLose()
