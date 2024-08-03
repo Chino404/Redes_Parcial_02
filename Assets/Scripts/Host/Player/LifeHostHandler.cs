@@ -75,8 +75,6 @@ public class LifeHostHandler : NetworkBehaviour
         _liveAmount--;
         if(_liveAmount==0)
         {
-           
-            //GameManager.instance.RPC_IsLose();
 
             Disconnect();
             return;
@@ -125,7 +123,7 @@ public class LifeHostHandler : NetworkBehaviour
         {
             //Runner.Despawn(Object);
             Runner.Disconnect(Object.InputAuthority);
-            
+
         }
         else
         {
