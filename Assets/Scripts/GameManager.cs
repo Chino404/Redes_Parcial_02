@@ -53,6 +53,11 @@ public class GameManager : NetworkBehaviour
         {
             _isGameStarting = true;
         }
+        //if (players.Count() == 1 && _isGameStarting == true)
+        //{
+        //    //Runner.Disconnect(Object.InputAuthority);
+        //    Runner.Shutdown();
+        //}
     }
 
     public void ActiveButton() => button.SetActive(true);

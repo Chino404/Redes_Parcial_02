@@ -748,7 +748,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 715711247}
         m_TargetAssemblyTypeName: PauseManager, Assembly-CSharp
-        m_MethodName: BacktoMainMenu
+        m_MethodName: BackToMainMenu
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1353,6 +1353,7 @@ GameObject:
   m_Component:
   - component: {fileID: 715711248}
   - component: {fileID: 715711247}
+  - component: {fileID: 715711249}
   m_Layer: 0
   m_Name: PauseManager
   m_TagString: Untagged
@@ -1372,6 +1373,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 056475a58673ebc4ab085db39ae769a4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _interpolationDataSource: 0
 --- !u!4 &715711248
 Transform:
   m_ObjectHideFlags: 0
@@ -1387,6 +1389,30 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &715711249
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 715711246}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1552182283, guid: e725a070cec140c4caffb81624c8c787, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObjectInterest: 1
+  DefaultInterestGroups: []
+  DestroyWhenStateAuthorityLeaves: 0
+  AllowStateAuthorityOverride: 1
+  AoiPositionSource: {fileID: 0}
+  Flags: 2561
+  NetworkGuid:
+    RawGuidValue: d0f34c85901945fc9d554b8c659daaaa
+  NestedObjects: []
+  NetworkedBehaviours:
+  - {fileID: 715711247}
+  SimulationBehaviours: []
 --- !u!1001 &727682176
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4021,8 +4047,8 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 2091488996}
-  - {fileID: 330445824}
   - {fileID: 859758357}
+  - {fileID: 330445824}
   m_Father: {fileID: 2115938466}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -5321,7 +5347,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 715711247}
         m_TargetAssemblyTypeName: PauseManager, Assembly-CSharp
-        m_MethodName: BacktoMainMenu
+        m_MethodName: BackToMainMenu
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
