@@ -1374,6 +1374,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _interpolationDataSource: 0
+  menuSceneName: Main Menu
+  networkRunner: {fileID: 6079531753194445235, guid: 57c2398ba78075242b75dd391f9119e5, type: 3}
 --- !u!4 &715711248
 Transform:
   m_ObjectHideFlags: 0

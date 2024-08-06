@@ -18,7 +18,7 @@ public class SessionBrowserHandler : MonoBehaviour
 
     void OnEnable()
     {
-        _networkRunner.OnSessionListUpdate += ReceiveSessionList;
+        _networkRunner.OnSessionListUpdate += ReceiveSessionList;        
     }
 
     void OnDisable()

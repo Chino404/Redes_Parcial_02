@@ -20,6 +20,7 @@ public class NetworkRunnerHandler : MonoBehaviour, INetworkRunnerCallbacks
     {
         if(_currentNetwork) Destroy(_currentNetwork);
 
+        if(_currentNetwork==null)
         _currentNetwork = Instantiate(_networkPrefab);
 
         _currentNetwork.AddCallbacks(this);
