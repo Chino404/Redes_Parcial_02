@@ -3,44 +3,28 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using Fusion;
+using System.Linq;
 
 public class PauseManager : NetworkBehaviour
 {
     
-
-    [Rpc(RpcSources.StateAuthority, RpcTargets.All)]
-    public void RPC_BacktoMainMenu()
-    {
-        SceneManager.LoadScene(0);
-    }
-
     public void BackToMainMenu()
     {
-        if (Runner.IsServer)
+        if (Runner.ActivePlayers.Count() == 1)
         {
-            RPC_BacktoMainMenu();
-            StartCoroutine(ShutDownServer());
+            Runner.Disconnect(Object.InputAuthority);
+            Runner.Shutdown();
+            print("ir al menu");
+            SceneManager.LoadScene(0);
         }
         else
-            SceneManager.LoadScene(0);
-    }
-
-    IEnumerator ShutDownServer()
-    {
-        yield return new WaitForSeconds(1f);
-        DisconnectAllClients();
-        yield return new WaitForSeconds(1f);
-        Runner.Shutdown();
-    }
-
-    private void DisconnectAllClients()
-    {
-        foreach (var player in Runner.ActivePlayers)
         {
-            if (player != Runner.LocalPlayer)
-            {
-                Runner.Disconnect(player);
-            }
+            Runner.Disconnect(Object.InputAuthority);
+            print("ir al menu");
+            SceneManager.LoadScene(0);
         }
     }
 }
+
+    
+

@@ -765,7 +765,7 @@ Animator:
   m_GameObject: {fileID: 2480687190747166565}
   m_Enabled: 1
   m_Avatar: {fileID: 9000000, guid: 59a7c1bf76f32b84881460f789111d19, type: 3}
-  m_Controller: {fileID: 9100000, guid: 94d76f859419a5048a2d6cf80ef45f88, type: 2}
+  m_Controller: {fileID: 9100000, guid: f0ec3e4d8ae09c645aec915594f2fb57, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 1
@@ -804,7 +804,7 @@ MonoBehaviour:
     _value: 0
     _inverse: 0
     _hash: -814817977
-  StateHashes: 000000004fb5fad532b9c51e
+  StateHashes: 00000000a1f7ab0dbb6691e7
   TriggerHashes: 00000000
 --- !u!4 &2965333896577215967 stripped
 Transform:
