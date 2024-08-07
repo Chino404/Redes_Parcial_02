@@ -65,6 +65,13 @@ public class PlayerHostModel : NetworkCharacterControllerPrototype
         Velocity = (transform.position - previousPos) * Runner.Simulation.Config.TickRate;
         IsGrounded = Controller.isGrounded;
 
+        //_mecanimAnim.Animator.SetFloat("MovementValue", Velocity.sqrMagnitude);
+        RPC_SetRunningState();
+    }
+
+    [Rpc(RpcSources.All, RpcTargets.All)]
+    public void RPC_SetRunningState()
+    {
         _mecanimAnim.Animator.SetFloat("MovementValue", Velocity.sqrMagnitude);
     }
 
