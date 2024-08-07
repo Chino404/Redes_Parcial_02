@@ -79,4 +79,9 @@ public class MainMenuHandler : MonoBehaviour
     {
         _networkRunner.CreateSession(_hostSessionName.text, _sceneName);
     }
+
+    public void QuitGame()
+    {
+        Application.Quit();
+    }
 }
