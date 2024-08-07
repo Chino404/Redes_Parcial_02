@@ -3,6 +3,8 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
+using TMPro;
 using UnityEngine;
 
 public class GameManager : NetworkBehaviour
@@ -18,6 +20,11 @@ public class GameManager : NetworkBehaviour
     public Canvas loseCanvas;
     public Canvas winCanvas;
     public GameObject button;
+
+    public TextMeshProUGUI titulo;
+    public TextMeshProUGUI contador;
+
+    public float currentTime = 3;
 
     //[Networked(OnChanged = nameof(OnCondisionChanged))]
     public bool Win { get; set; }
@@ -68,16 +75,31 @@ public class GameManager : NetworkBehaviour
     {
         if (_isGameStarting)
         {
+            titulo.gameObject.SetActive(false);
+            StartCoroutine(Contador());
+        }
+    }
 
-            _waitingCanvas.gameObject.SetActive(false);
-            Time.timeScale = 1;
+    IEnumerator Contador()
+    {
+        contador.gameObject.SetActive(true);
+        contador.text = "3";
+        yield return new WaitForSecondsRealtime(1);
+        contador.text = "2";
+        yield return new WaitForSecondsRealtime(1);
+        contador.text = "1";
+        yield return new WaitForSecondsRealtime(1);
+        contador.text = "GO!";
+        yield return new WaitForSecondsRealtime(1);
 
-            if (!_playMusicGame)
-            {
-                _playMusicGame = true;
-                AudioManager.instance.StopMusic();
-                AudioManager.instance.PlayMusic(AudioManager.instance.musicGame);
-            }
+        _waitingCanvas.gameObject.SetActive(false);
+        Time.timeScale = 1;
+
+        if (!_playMusicGame)
+        {
+            _playMusicGame = true;
+            AudioManager.instance.StopMusic();
+            AudioManager.instance.PlayMusic(AudioManager.instance.musicGame);
         }
     }
 
@@ -103,6 +125,7 @@ public class GameManager : NetworkBehaviour
     {
         if (_isGameStarting && players.Count() == 1) CanvasWin();
     }
+
     public void CanvasWin()
     {
         //Time.timeScale = 0;
