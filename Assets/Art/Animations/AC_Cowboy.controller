@@ -9,22 +9,22 @@ BlendTree:
   m_Name: Blend Tree
   m_Childs:
   - serializedVersion: 2
-    m_Motion: {fileID: 7400000, guid: f6d7648fe2ccd2040b02230a9c3ab057, type: 2}
+    m_Motion: {fileID: 7400000, guid: e98729f186af41c4fb25ac1375902d01, type: 2}
     m_Threshold: 0
     m_Position: {x: 0, y: 0}
     m_TimeScale: 1
     m_CycleOffset: 0
-    m_DirectBlendParameter: Blend
+    m_DirectBlendParameter: MovementValue
     m_Mirror: 0
   - serializedVersion: 2
-    m_Motion: {fileID: 7400000, guid: 77c20443307ea46469958fd4898ad447, type: 2}
+    m_Motion: {fileID: 7400000, guid: 0cd4f0fb6375d64448f5b7b44c953d05, type: 2}
     m_Threshold: 1
     m_Position: {x: 0, y: 0}
     m_TimeScale: 1
     m_CycleOffset: 0
-    m_DirectBlendParameter: Blend
+    m_DirectBlendParameter: MovementValue
     m_Mirror: 0
-  m_BlendParameter: Blend
+  m_BlendParameter: MovementValue
   m_BlendParameterY: Blend
   m_MinThreshold: 0
   m_MaxThreshold: 1
@@ -66,7 +66,7 @@ AnimatorController:
   m_Name: AC_Cowboy
   serializedVersion: 5
   m_AnimatorParameters:
-  - m_Name: Blend
+  - m_Name: MovementValue
     m_Type: 1
     m_DefaultFloat: 0
     m_DefaultInt: 0
@@ -96,7 +96,7 @@ AnimatorStateMachine:
   m_ChildStates:
   - serializedVersion: 1
     m_State: {fileID: -1514197697584084690}
-    m_Position: {x: 368.12427, y: 145.83427, z: 0}
+    m_Position: {x: 370, y: 110, z: 0}
   m_ChildStateMachines: []
   m_AnyStateTransitions: []
   m_EntryTransitions: []
